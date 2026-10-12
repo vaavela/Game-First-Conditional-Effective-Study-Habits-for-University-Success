@@ -1,0 +1,642 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>First Conditional: Effective Study Habits</title>
+<style>
+:root {
+  --bg: #211713;
+  --panel: #30211b;
+  --cream: #f5e8d2;
+  --muted: #c7ab5f;
+  --terracotta: #8c310a;
+  --copper: #dc9864;
+  --gold: #e8c477;
+  --green: #a6ad78;
+  --red: #d98173;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  padding: 24px 14px 40px;
+  color: var(--cream);
+  font-family: Georgia, "Times New Roman", serif;
+  background:
+    radial-gradient(ellipse at top left, #70452b 0%, transparent 34%),
+    radial-gradient(ellipse at bottom right, #5b3030 0%, transparent 32%),
+    var(--bg);
+}
+button, input { font: inherit; }
+.wrap { max-width: 1080px; margin: 0 auto; }
+header { text-align: center; margin-bottom: 22px; }
+.eyebrow {
+  display: inline-block;
+  padding: 7px 13px;
+  border: 1px solid var(--copper);
+  border-radius: 99px;
+  color: var(--gold);
+  letter-spacing: .15em;
+  font: bold .75rem Arial, sans-serif;
+}
+h1 {
+  margin: 14px 0 8px;
+  color: var(--gold);
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  font-weight: 600;
+}
+header p { color: var(--muted); line-height: 1.6; }
+.panel {
+  background: linear-gradient(145deg, #30211bf5, #241916f7);
+  border: 1px solid #d92a2a88;
+  border-radius: 20px;
+  box-shadow: 0 18px 60px #10090677;
+  overflow: hidden;
+}
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 15px 19px;
+  background: #160f0d55;
+  border-bottom: 1px solid #e8c47733;
+}
+.pill {
+  padding: 9px 12px;
+  border: 1px solid #e8c47744;
+  border-radius: 10px;
+  color: var(--muted);
+  font: .9rem Arial, sans-serif;
+}
+.pill b { color: var(--gold); }
+.timer { color: var(--green); }
+.timer.danger { color: var(--red); }
+.progress { height: 6px; background: #ffffff12; }
+.bar {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, var(--terracotta), var(--gold));
+  transition: width .3s;
+}
+.screen { padding: clamp(17px, 4vw, 30px); }
+h2 { color: var(--gold); font-size: clamp(1.5rem, 3vw, 2rem); }
+h3 {
+  color: var(--copper);
+  font: bold 1rem Arial, sans-serif;
+  letter-spacing: .06em;
+}
+p { line-height: 1.6; }
+.subtle { color: var(--muted); font: .92rem/1.6 Arial, sans-serif; }
+.name-area {
+  margin: 20px 0;
+  padding: 18px;
+  border-radius: 14px;
+  background: #ffffff08;
+  border: 1px solid #e8c47744;
+}
+.name-area label {
+  display: block;
+  margin-bottom: 9px;
+  color: var(--gold);
+  font-weight: bold;
+}
+.name-area input {
+  width: 100%;
+  padding: 13px 14px;
+  color: var(--cream);
+  background: #1b120f;
+  border: 1px solid #c56f4b99;
+  border-radius: 9px;
+  outline: none;
+}
+.name-area input:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px #e8c47722;
+}
+.formula {
+  display: inline-block;
+  margin: 7px 0;
+  padding: 10px 13px;
+  border-radius: 9px;
+  border: 1px solid #e8c47777;
+  background: #e8c47710;
+  color: var(--gold);
+  font: bold .95rem Arial, sans-serif;
+}
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 20px 0;
+}
+.step {
+  padding: 15px;
+  border-radius: 12px;
+  background: #ffffff07;
+  border: 1px solid #c56f4b55;
+  line-height: 1.5;
+}
+.step strong {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--copper);
+  font: bold .82rem Arial, sans-serif;
+}
+.example {
+  padding: 17px;
+  border: 1px solid var(--green);
+  background: #a6ad7810;
+  border-radius: 13px;
+}
+.example-title {
+  color: var(--green);
+  font: bold .85rem Arial, sans-serif;
+  letter-spacing: .06em;
+}
+.gamegrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+.choices { display: grid; gap: 10px; }
+.choice {
+  width: 100%;
+  min-height: 60px;
+  padding: 13px;
+  text-align: left;
+  line-height: 1.45;
+  color: var(--cream);
+  background: #ffffff07;
+  border: 1px solid #c5a58b44;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background .15s, border-color .15s, transform .15s;
+  font: .94rem/1.45 Arial, sans-serif;
+}
+.choice:hover:not(:disabled) {
+  border-color: var(--copper);
+  background: #c56f4b18;
+  transform: translateY(-1px);
+}
+.choice.selected { border-color: var(--gold); background: #e8c47720; }
+.choice.correct { border-color: var(--green); background: #a6ad781c; }
+.choice.wrong { border-color: var(--red); background: #d981731c; }
+.choice:disabled { opacity: 1; cursor: default; }
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 21px 0 3px;
+}
+.btn {
+  padding: 12px 17px;
+  border: 1px solid var(--copper);
+  border-radius: 9px;
+  color: var(--cream);
+  background: #c56f4b18;
+  cursor: pointer;
+  font: bold .9rem Arial, sans-serif;
+  transition: .15s;
+}
+.btn:hover:not(:disabled) { background: #c56f4b33; }
+.btn.primary {
+  background: var(--terracotta);
+  border-color: var(--terracotta);
+  color: #fff8ef;
+}
+.btn.primary:hover:not(:disabled) { background: #d17c57; }
+.btn.secondary { border-color: var(--gold); color: var(--gold); }
+.btn:disabled { opacity: .35; cursor: not-allowed; }
+.feedback {
+  min-height: 48px;
+  margin-top: 16px;
+  padding: 13px;
+  border-radius: 10px;
+  background: #ffffff07;
+  color: var(--muted);
+  text-align: center;
+  font: .95rem/1.5 Arial, sans-serif;
+}
+.feedback.good { color: var(--green); border: 1px solid #a6ad7866; }
+.feedback.bad { color: var(--red); border: 1px solid #d9817366; }
+.hidden { display: none !important; }
+.result { padding: 28px 20px; text-align: center; }
+.result .meme { margin: 12px; font-size: clamp(4rem, 12vw, 7rem); }
+.meme-caption {
+  display: inline-block;
+  padding: 10px 14px;
+  border: 2px solid var(--gold);
+  border-radius: 8px;
+  color: var(--gold);
+  font: 900 clamp(1rem, 3vw, 1.5rem) Arial, sans-serif;
+  transform: rotate(-1deg);
+}
+.result-card {
+  max-width: 650px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #e8c47766;
+  border-radius: 14px;
+  background: #ffffff07;
+}
+.final-score { color: var(--gold); font-size: 2.2rem; margin: 8px 0; }
+footer { text-align: center; margin-top: 16px; }
+@media (max-width: 720px) {
+  .steps, .gamegrid { grid-template-columns: 1fr; }
+  .top { justify-content: center; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <span class="eyebrow">ENGLISH LEARNING • A2–B1</span>
+  <h1>Autumn Study Challenge</h1>
+  <p>First Conditional: Effective Study Habits for University Success</p>
+</header>
+
+<main class="panel">
+  <div class="top">
+    <div class="pill">PLAYER: <b id="playerDisplay">Guest</b></div>
+    <div class="pill">SCORE: <b id="score">0</b> / 10</div>
+    <div class="pill">PAIRS: <b id="pairsDone">0</b> / 10</div>
+    <div class="pill timer" id="timerBox">TIME: <b id="timer">5:00</b></div>
+    <label class="pill"><input id="soundToggle" type="checkbox" checked> Sound</label>
+  </div>
+  <div class="progress"><div class="bar" id="progressBar"></div></div>
+
+  <section class="screen" id="intro">
+    <h2>Welcome, future scholar!</h2>
+    <p>Match each study habit with its logical result. Complete all 10 pairs before time runs out. Read carefully and think about cause and effect.</p>
+
+    <div class="name-area">
+      <label for="playerName">What is your name?</label>
+      <input id="playerName" type="text" maxlength="30" placeholder="Enter your name..." autocomplete="given-name">
+      <p class="subtle">Your name will appear on your final results.</p>
+    </div>
+
+    <div class="formula">If + Present Simple, will + base verb</div>
+
+    <div class="steps">
+      <div class="step"><strong>1. CHOOSE</strong>Select a condition in Column A.</div>
+      <div class="step"><strong>2. MATCH</strong>Select the logical result in Column B.</div>
+      <div class="step"><strong>3. CHECK</strong>Click CHECK MATCH to confirm your answer.</div>
+    </div>
+
+    <div class="example">
+      <div class="example-title">PRACTICE ROUND</div>
+      <p><b>If you study every day,</b> what will happen?</p>
+      <div class="actions" style="justify-content:flex-start">
+        <button class="btn" id="exampleWrong">You will forget everything.</button>
+        <button class="btn" id="exampleRight">You will make steady progress.</button>
+      </div>
+      <p id="exampleFeedback" class="subtle">Choose an answer to try the example.</p>
+    </div>
+
+    <p class="subtle">You have 5 minutes. Each correct match earns 1 point. Each incorrect match costs 5 seconds. Sound effects can be turned off.</p>
+    <div class="actions"><button class="btn primary" id="startBtn">START CHALLENGE →</button></div>
+    <p id="nameWarning" class="subtle" style="text-align:center;color:var(--red)"></p>
+  </section>
+
+  <section class="screen hidden" id="game">
+    <div class="gamegrid">
+      <div>
+        <h3>COLUMN A — CONDITIONS</h3>
+        <div class="choices" id="conditions"></div>
+      </div>
+      <div>
+        <h3>COLUMN B — RESULTS</h3>
+        <div class="choices" id="results"></div>
+      </div>
+    </div>
+    <div class="feedback" id="feedback">Choose a condition, then choose its result.</div>
+    <div class="actions">
+      <button class="btn primary" id="checkBtn" disabled>CHECK MATCH ✓</button>
+      <button class="btn secondary" id="clearBtn">CLEAR SELECTION</button>
+    </div>
+  </section>
+
+  <section class="result hidden" id="end">
+    <div class="meme" id="meme">🏆🍂✨</div>
+    <div class="meme-caption" id="memeCaption">EXCELLENT WORK!</div>
+    <h2 id="endTitle">Challenge complete!</h2>
+    <div class="result-card">
+      <p id="personalMessage"></p>
+      <div class="final-score" id="finalScore">0 / 10</div>
+      <p id="endText"></p>
+    </div>
+    <p class="subtle">Keep practicing! If you study consistently, you will become more confident in English.</p>
+    <div class="actions">
+      <button class="btn primary" id="againBtn">PLAY AGAIN ↻</button>
+      <button class="btn secondary" id="instructionsBtn">BACK TO INSTRUCTIONS</button>
+    </div>
+  </section>
+</main>
+
+<footer class="subtle">Small habits, steady progress. Happy learning!</footer>
+</div>
+
+<script>
+const pairs = [
+  { c: "If you create a weekly study schedule,", r: "you will organize your academic time better." },
+  { c: "If you practice English speaking every day,", r: "you will improve your fluency and confidence." },
+  { c: "If students take clear notes during class,", r: "they will review for exams much more easily." },
+  { c: "If you turn off notifications on your phone,", r: "you will concentrate on your homework without distractions." },
+  { c: "If we set realistic study goals each week,", r: "we will achieve higher grades in our courses." },
+  { c: "If you read short articles in English before bed,", r: "you will expand your vocabulary naturally." },
+  { c: "If you ask questions to your online tutor,", r: "you will solve your doubts quickly and effectively." },
+  { c: "If learners review grammar rules consistently,", r: "they will make fewer mistakes in written assignments." },
+  { c: "If you participate actively in the university forum,", r: "you will learn collaborative strategies from your peers." },
+  { c: "If you sleep at least eight hours before an exam,", r: "you will have more energy and focus on test day." }
+];
+
+const $ = id => document.getElementById(id);
+let playerName = "Guest";
+let selectedC = null, selectedR = null, score = 0, timeLeft = 300;
+let matched = new Set(), timerId = null, tensionId = null, audioCtx = null;
+let gameActive = false;
+
+function getAudio() {
+  if (!$("soundToggle").checked) return null;
+  try {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if (audioCtx.state === "suspended") audioCtx.resume();
+    return audioCtx;
+  } catch (error) { return null; }
+}
+
+function tone(frequency, duration, type = "sine", volume = 0.05, delay = 0) {
+  const ctx = getAudio();
+  if (!ctx) return;
+  const oscillator = ctx.createOscillator();
+  const gain = ctx.createGain();
+  oscillator.type = type;
+  oscillator.frequency.setValueAtTime(frequency, ctx.currentTime + delay);
+  gain.gain.setValueAtTime(0.001, ctx.currentTime + delay);
+  gain.gain.exponentialRampToValueAtTime(volume, ctx.currentTime + delay + 0.02);
+  gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + delay + duration);
+  oscillator.connect(gain);
+  gain.connect(ctx.destination);
+  oscillator.start(ctx.currentTime + delay);
+  oscillator.stop(ctx.currentTime + delay + duration + 0.03);
+}
+
+function correctSound() {
+  tone(523, 0.13);
+  tone(659, 0.16, "sine", 0.05, 0.12);
+  tone(784, 0.22, "triangle", 0.05, 0.25);
+}
+
+function incorrectSound() {
+  tone(180, 0.22, "sawtooth", 0.045);
+  tone(130, 0.25, "triangle", 0.04, 0.12);
+}
+
+function stopTension() {
+  if (tensionId) clearInterval(tensionId);
+  tensionId = null;
+}
+
+function startTension() {
+  if (tensionId || !$("soundToggle").checked) return;
+  let flip = false;
+  tensionId = setInterval(() => {
+    if (!gameActive || timeLeft > 10) { stopTension(); return; }
+    flip = !flip;
+    tone(flip ? 160 : 125, 0.17, "sawtooth", 0.025);
+  }, 480);
+}
+
+function shuffle(items) {
+  const copy = [...items];
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+}
+
+function getButton(containerId, id) {
+  return [...$(containerId).querySelectorAll("button")]
+    .find(button => Number(button.dataset.id) === id);
+}
+
+function createChoice(text, id, type) {
+  const button = document.createElement("button");
+  button.className = "choice";
+  button.textContent = text;
+  button.dataset.id = id;
+  button.addEventListener("click", () => {
+    if (!gameActive || matched.has(id)) return;
+    if (type === "condition") selectedC = id;
+    else selectedR = id;
+    updateSelection();
+  });
+  return button;
+}
+
+function renderChoices() {
+  $("conditions").innerHTML = "";
+  $("results").innerHTML = "";
+  shuffle(pairs.map((pair, id) => ({ pair, id }))).forEach(({ pair, id }) => {
+    $("conditions").appendChild(createChoice(pair.c, id, "condition"));
+  });
+  shuffle(pairs.map((pair, id) => ({ pair, id }))).forEach(({ pair, id }) => {
+    $("results").appendChild(createChoice(pair.r, id, "result"));
+  });
+}
+
+function updateSelection() {
+  document.querySelectorAll(".choice").forEach(button => {
+    button.classList.remove("selected", "wrong");
+  });
+  if (selectedC !== null) getButton("conditions", selectedC).classList.add("selected");
+  if (selectedR !== null) getButton("results", selectedR).classList.add("selected");
+  $("checkBtn").disabled = selectedC === null || selectedR === null;
+  $("feedback").className = "feedback";
+  if (selectedC === null) $("feedback").textContent = "Choose a condition from Column A.";
+  else if (selectedR === null) $("feedback").textContent = "Now choose its logical result from Column B.";
+  else $("feedback").textContent = "Ready? Click CHECK MATCH!";
+}
+
+function updateStats() {
+  $("score").textContent = score;
+  $("pairsDone").textContent = matched.size;
+  $("progressBar").style.width = (matched.size * 10) + "%";
+  const minutes = Math.floor(timeLeft / 60);
+  const seconds = String(timeLeft % 60).padStart(2, "0");
+  $("timer").textContent = `${minutes}:${seconds}`;
+  $("timerBox").classList.toggle("danger", timeLeft <= 10);
+}
+
+function checkMatch() {
+  if (selectedC === null || selectedR === null || !gameActive) return;
+  const condition = getButton("conditions", selectedC);
+  const result = getButton("results", selectedR);
+
+  if (selectedC === selectedR) {
+    matched.add(selectedC);
+    score++;
+    correctSound();
+    condition.classList.remove("selected");
+    result.classList.remove("selected");
+    condition.classList.add("correct");
+    result.classList.add("correct");
+    condition.disabled = true;
+    result.disabled = true;
+    $("feedback").className = "feedback good";
+    $("feedback").textContent = "✓ Correct match! Well done!";
+  } else {
+    incorrectSound();
+    timeLeft = Math.max(0, timeLeft - 5);
+    condition.classList.add("wrong");
+    result.classList.add("wrong");
+    $("feedback").className = "feedback bad";
+    $("feedback").textContent = "✗ Not quite! You lost 5 seconds. Think about the logical result.";
+  }
+
+  selectedC = null;
+  selectedR = null;
+  $("checkBtn").disabled = true;
+  updateStats();
+
+  if (timeLeft <= 0) endGame(true);
+  else if (matched.size === 10) endGame(false);
+}
+
+function endGame(timeUp) {
+  gameActive = false;
+  clearInterval(timerId);
+  timerId = null;
+  stopTension();
+
+  $("game").classList.add("hidden");
+  $("end").classList.remove("hidden");
+
+  let emoji, caption, title, message;
+  if (score >= 9) {
+    emoji = "🏆🍂✨";
+    caption = "AUTUMN CHAMPION!";
+    title = "Outstanding work!";
+    message = "You matched almost every pair. Your study skills are growing!";
+  } else if (score >= 6) {
+    emoji = "🍁😊📚";
+    caption = "A STRONG EFFORT!";
+    title = "Well done!";
+    message = "You are making progress. Keep practicing to improve your score!";
+  } else if (score >= 3) {
+    emoji = "😂🍂☕";
+    caption = "THE TIMER WAS TOO FAST!";
+    title = "Keep going!";
+    message = "Review the study habits and try the challenge again.";
+  } else {
+    emoji = "🙈📚🍁";
+    caption = "BACK TO THE BOOKS!";
+    title = "Every try is a new start!";
+    message = "Practice the First Conditional and give it another try.";
+  }
+
+  if (timeUp) {
+    title = "Time is up, " + playerName + "!";
+    message += " The countdown reached zero.";
+  } else {
+    title = "Challenge complete, " + playerName + "!";
+  }
+
+  $("meme").textContent = emoji;
+  $("memeCaption").textContent = caption;
+  $("endTitle").textContent = title;
+  $("personalMessage").textContent = "Well done, " + playerName + "! Here are your results:";
+  $("finalScore").textContent = score + " / 10";
+  $("endText").textContent = message + " You completed " + matched.size + " out of 10 pairs.";
+  if (score >= 9) correctSound();
+  else incorrectSound();
+  updateStats();
+}
+
+function startGame() {
+  const enteredName = $("playerName").value.trim();
+  if (!enteredName) {
+    $("nameWarning").textContent = "Please enter your name before starting.";
+    $("playerName").focus();
+    return;
+  }
+
+  playerName = enteredName.slice(0, 30);
+  $("playerDisplay").textContent = playerName;
+  $("nameWarning").textContent = "";
+  getAudio();
+
+  score = 0;
+  matched = new Set();
+  selectedC = null;
+  selectedR = null;
+  timeLeft = 300;
+  gameActive = true;
+
+  $("intro").classList.add("hidden");
+  $("end").classList.add("hidden");
+  $("game").classList.remove("hidden");
+
+  renderChoices();
+  updateStats();
+  $("feedback").className = "feedback";
+  $("feedback").textContent = "Choose a condition, then choose its result.";
+
+  clearInterval(timerId);
+  stopTension();
+  timerId = setInterval(() => {
+    if (!gameActive) return;
+    timeLeft--;
+    updateStats();
+    if (timeLeft <= 10 && timeLeft > 0) startTension();
+    if (timeLeft <= 0) endGame(true);
+  }, 1000);
+}
+
+function showInstructions() {
+  gameActive = false;
+  clearInterval(timerId);
+  timerId = null;
+  stopTension();
+  $("game").classList.add("hidden");
+  $("end").classList.add("hidden");
+  $("intro").classList.remove("hidden");
+}
+
+$("startBtn").addEventListener("click", startGame);
+$("checkBtn").addEventListener("click", checkMatch);
+$("clearBtn").addEventListener("click", () => {
+  selectedC = null;
+  selectedR = null;
+  updateSelection();
+});
+$("againBtn").addEventListener("click", startGame);
+$("instructionsBtn").addEventListener("click", showInstructions);
+
+$("exampleWrong").addEventListener("click", () => {
+  $("exampleFeedback").textContent = "Not quite! Studying regularly usually helps you improve. Try again.";
+  $("exampleFeedback").style.color = "var(--red)";
+  incorrectSound();
+});
+
+$("exampleRight").addEventListener("click", () => {
+  $("exampleFeedback").textContent = "Correct! If you study every day, you will make steady progress. Now you are ready to play!";
+  $("exampleFeedback").style.color = "var(--green)";
+  correctSound();
+});
+
+$("soundToggle").addEventListener("change", () => {
+  if (!$("soundToggle").checked) stopTension();
+  else if (gameActive && timeLeft <= 10) startTension();
+});
+
+updateStats();
+</script>
+</body>
+</html>
